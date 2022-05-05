@@ -1,78 +1,87 @@
+import sys
 
-from itertools import repeat
-numbers=[]
-let=0
-with open('../data/0-9_horiz.txt', 'r') as f:
+def read_file(filename):
+    #list to store the lines from the files; one string is one line
+    lines_as_string=[]
 
-    for c,val in enumerate(f):
+    #open the simple dummy file for reading
+    with open(filename, 'r') as f:
+        #iterate through file
+        for c,val in enumerate(f):
+                lines_as_string.append(val) #add line to string
+                lines_as_string[-1]=lines_as_string[-1][0:-1] #get rid of the new line character at the end of every line without using strip
+                #if strip is used the starting spaces also vanish
+                if len(lines_as_string[-1])==1 or len(lines_as_string[-1])==0: #if the line is too short
+                    #delete every fourth line (empty lines)
+                    lines_as_string=lines_as_string[:-1]
+    return(lines_as_string)
 
-            numbers.append(val)
+def make_entries(lines):
+    #create lists to parse the data
+    entries= []
+    entry_as_nested_list=[]
+    #iterate over the lines
+    for c in range(len(lines)):
+        #make every three character into one cohesive element
+        #every three character in a line represents a third of the whole digit
+        #store in a temporary variable
+        separate_digit_parts = ["".join([lines[c][x-3],lines[c][x-2],lines[c][x-1]])
+                for x in range(1,(len(lines[c])+1)) if x%3==0]
 
+        #store digit parts as lists in a second temporary variable used later
+        entry_as_nested_list.append(separate_digit_parts)
 
-            numbers[-1]=numbers[-1][0:-1]
-                #print(" ",end="")
+        #reset the first temporary variable since next iteration is dealing with another entry that is handeld separately
+        separate_digit_parts=[]
 
+        #every third iteration means that with the third line we have a whole entry stringified and put into lists by line
+        if (c+1)%3==0:
+            #place the lists as one entry for each three line
+            entries.append(entry_as_nested_list)
+            #restart temporary variable to allow new entry to be added
+            entry_as_nested_list=[]
 
-
-            #el
-            if len(numbers[-1])==1 or len(numbers[-1])==0:
-                numbers=numbers[:-1]
-
-            #numbers[-1][-1]=''
-
-            #print(line.strip())
-        # else:
-        #     numbers.append(line)
-        #c += 1
-        #print([x.split(' ')[1] for x in open(f).readlines()])
-
-
-numbers2= []
-temp=[]
-temp2=[]
-
-for c in range(len(numbers)):
-    # if c==17:
-    #     continue
-
-    for x in range(1,(len(numbers[c])+1)):
-        if x%3==0:
-            temp.append("".join([numbers[c][x-3],numbers[c][x-2],numbers[c][x-1]]))
-            # numbers2[c].append("".join([numbers[c][x-3],numbers[c][x-2],numbers[c][x-1]]))
-            # print('nums',numbers2)
-
-
-    # if c==len(numbers)-1:
-    #     temp.append("".join([numbers[c][-3],numbers[c][-2],numbers[c][-1]]))
-    #     print("hhata",temp)
-    temp2.append(temp)
-
-    temp=[]
-    if (c+1)%3==0:
-        numbers2.append(temp2)
-        print("temp2",temp2)
-        temp2=[]
-        print("num2",numbers2)
+        #at the end we have a three leveled nested list
+        #inner levels represent one line in wich each digit part is a string
+        #second level is one entry aka three lines
+    return entries
 
 
+def give_numbers(entries):
+    #transpose the inner parts of the nested list
+    #reorders them so one inner list is know represents the three parts of a digit
+    digit_parts=[list(map(list, zip(*x))) for x in entries]
 
-    #numbers2.append()
-print(numbers2)
-numbers3=[]
+    numbers=[]
+    #digits represented as their three parts
+    digits={0:[' _ ', '| |', '|_|'],1:['   ','  |', '  |'],2:[' _ ', ' _|', '|_ '], 3:[' _ ', ' _|', ' _|'], 4:['   ','|_|', '  |'],
+            5:[' _ ', '|_ ', ' _|'], 6:[' _ ', '|_ ', '|_|'], 7:[' _ ', '  |', '  |'], 8:[' _ ', '|_|', '|_|'], 9:[' _ ', '|_|', '  _|']}
 
-for x in numbers2:
-    numbers3.append(list(map(list, zip(*x))))
+    #get dictionary indexes
+    key_list = list(digits.keys())
+    val_list = list(digits.values())
 
-print("num3",numbers3)
+    #identify a digit by its three parts
+    numbers=[key_list[val_list.index(digit_parts[x][y])] for x in range(len(digit_parts)) for y in range(len(digit_parts[x]))]
+    return numbers
 
-numbers4=[]
-digits={0:[' _ ', '| |', '|_|'],1:['   ','  |', '  |'],2:[' _ ', ' _|', '|_ '], 3:[' _ ', ' _|', ' _|'], 4:['   ','|_|', '  |'],
-        5:[' _ ', '|_ ', ' _|'], 6:[' _ ', '|_ ', '|_|'], 7:[' _ ', '  |', '  |'], 8:[' _ ', '|_|', '|_|'], 9:[' _ ', '|_|', '  _|']}
-key_list = list(digits.keys())
-val_list = list(digits.values())
-for x in range(len(numbers3)):
-    for y in range(len(numbers3[x])):
-        numbers4.append(key_list[val_list.index(numbers3[x][y])])
+def parse_scan(filename):
+    lines=read_file(filename)
+    entries=make_entries(lines)
+    numbers=give_numbers(entries)
+    return numbers
 
 
-print(numbers4)
+if __name__=="__main__":
+    if len(sys.argv) < 2:
+        print("Not enough arguments! Usage: user_story_1 <filename>")
+        exit(1)
+    else:
+       numbers=(parse_scan(str(sys.argv[1])))
+       temp=[]
+       for c,val in enumerate(numbers):
+           if (c+1)%9==0:
+               print(f"Account num: {''.join(list(map(str, temp)))}")
+               temp=[]
+           temp.append(val)
+
