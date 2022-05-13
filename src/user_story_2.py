@@ -1,11 +1,12 @@
 from user_story_1 import *
 
+
 def validate(option):
     #main option that uses the first user story to get numbers from a file
     if option=='us1':
         #list to store all numbers and their corresponding results
         validity=[]
-        file="../data/0-9_horiz.txt"#input("Filepath: ")
+        file=input("Filepath: ")#"../data/0-9_faulty.txt"#
         #call us1
         numbers=(parse_scan(file))
         #hold one account number at once to deal with
@@ -14,14 +15,20 @@ def validate(option):
            temp.append(val)
            #after 9 digits check validity
            if (c+1)%9==0:
-               #comprehesion to reverse list and calculate the components of checksum
-               check=[((x+1)*temp[::-1][x]) for x in range(len(temp))]
-               #rest of the checksum
-               checksum=sum(check)%11
-               #store validity value with number
-               validity.append([(''.join(list(map(str, temp)))),checksum==0])
-               #print results in case this module is used separately
-               print(f"Account number {validity[((c+1)//9)-1][0]} validity: {validity[((c+1)//9)-1][1]}")
+               #adapted to us3
+               if '?' not in temp:
+                   #comprehesion to reverse list and calculate the components of checksum
+                   check=[((x+1)*temp[::-1][x]) for x in range(len(temp))]
+                   #rest of the checksum
+                   checksum=sum(check)%11
+                   #store validity value with number
+                   validity.append([(''.join(list(map(str, temp)))),checksum==0])
+                   #print results in case this module is used separately
+                   print(f"Account number {validity[((c+1)//9)-1][0]} validity: {validity[((c+1)//9)-1][1]}")
+               else:
+                   entry=[(''.join(list(map(str, temp)))),"ILL"]
+                   print(entry)
+                   validity.append(entry)
                temp=[]
         return validity
 
