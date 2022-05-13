@@ -27,7 +27,7 @@ def validate(option):
                    print(f"Account number {validity[((c+1)//9)-1][0]} validity: {validity[((c+1)//9)-1][1]}")
                else:
                    entry=[(''.join(list(map(str, temp)))),"ILL"]
-                   print(entry)
+                   print(f"Account number {entry[0]} validity: {entry[1]}")
                    validity.append(entry)
                temp=[]
         return validity
