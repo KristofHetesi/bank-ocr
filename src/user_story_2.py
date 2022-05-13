@@ -27,7 +27,16 @@ def validate(option):
 
     elif option=='num':
         nums=(input("Numbers: "))
-        return
+        validity=[]
+        #comprehesion to reverse list and calculate the components of checksum
+        check=[((x+1)*int(nums[::-1][x])) for x in range(len(nums))]
+        #rest of the checksum
+        checksum=sum(list(map(int,check)))%11
+        #store validity value with number
+        validity.append((''.join(list(map(str, nums)))))
+        validity.append(checksum==0)
+        print(f"Account number {validity[0]} validity: {validity[1]}")
+        return validity
 
     else:
         print("Invalid argument")
