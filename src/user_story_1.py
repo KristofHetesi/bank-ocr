@@ -80,8 +80,9 @@ if __name__=="__main__":
        numbers=(parse_scan(str(sys.argv[1])))
        temp=[]
        for c,val in enumerate(numbers):
+           temp.append(val)
            if (c+1)%9==0:
                print(f"Account num: {''.join(list(map(str, temp)))}")
                temp=[]
-           temp.append(val)
+
 
