@@ -1,9 +1,9 @@
 from user_story_1 import *
 from user_story_2 import *
 
-def make_results(tof):
-    results=validate('us1')
-    with open(tof, 'a') as f:
+def make_results(tof,fromf):
+    results=validate('us1',fromf)
+    with open(tof, 'w') as f:
         for entry in results:
             if entry[1]==True:
                 formatted=f"{entry[0]}\n"
@@ -13,9 +13,11 @@ def make_results(tof):
                 formatted=f"{entry[0]} {entry[1]}\n"
             f.write(formatted)
 
+
+
 if __name__=="__main__":
-    if len(sys.argv) < 2:
-        print("Not enough arguments! Usage: 'user_story_3 <filenameto>'")
+    if len(sys.argv) < 3:
+        print("Not enough arguments! Usage: 'user_story_3 <filenameto> <filenamefrom>'")
         exit(1)
     else:
-        make_results(sys.argv[1])
+        make_results(sys.argv[1],sys.argv[2])

@@ -52,7 +52,6 @@ def give_numbers(entries):
     #reorders them so one inner list is know represents the three parts of a digit
     digit_parts=[list(map(list, zip(*x))) for x in entries]
 
-    numbers=[]
     #digits represented as their three parts
     digits={0:[' _ ', '| |', '|_|'],1:['   ','  |', '  |'],2:[' _ ', ' _|', '|_ '], 3:[' _ ', ' _|', ' _|'], 4:['   ','|_|', '  |'],
             5:[' _ ', '|_ ', ' _|'], 6:[' _ ', '|_ ', '|_|'], 7:[' _ ', '  |', '  |'], 8:[' _ ', '|_|', '|_|'], 9:[' _ ', '|_|', '  _|']}
@@ -64,7 +63,7 @@ def give_numbers(entries):
     #identify a digit by its three parts, modified to work with user story 3
     numbers=[key_list[val_list.index(digit_parts[x][y])] if digit_parts[x][y] in digits.values()  else '?' for x in range(len(digit_parts))  for y in range(len(digit_parts[x])) ]
     #numbers=[key_list[val_list.index(digit_parts[x][y])] for x in range(len(digit_parts)) for y in range(len(digit_parts[x]))]
-    return numbers
+    return [numbers,digit_parts]
 
 def parse_scan(filename):
     lines=read_file(filename)
@@ -73,6 +72,12 @@ def parse_scan(filename):
     return numbers
 
 
+def return_raw(filename):
+    lines=read_file(filename)
+    entries=make_entries(lines)
+    numbers=give_numbers(entries)
+    return numbers[1]
+
 if __name__=="__main__":
     if len(sys.argv) < 2:
         print("Not enough arguments! Usage: user_story_1 <filename>")
@@ -80,7 +85,7 @@ if __name__=="__main__":
     else:
        numbers=(parse_scan(str(sys.argv[1])))
        temp=[]
-       for c,val in enumerate(numbers):
+       for c,val in enumerate(numbers[0]):
            temp.append(val)
            if (c+1)%9==0:
                print(f"Account num: {''.join(list(map(str, temp)))}")

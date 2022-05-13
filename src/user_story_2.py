@@ -1,17 +1,17 @@
 from user_story_1 import *
 
 
-def validate(option):
+def validate(option,arg):
     #main option that uses the first user story to get numbers from a file
     if option=='us1':
         #list to store all numbers and their corresponding results
         validity=[]
-        file=input("Filepath: ")#"../data/0-9_faulty.txt"#
+        file=arg#"../data/0-9_faulty.txt"#
         #call us1
         numbers=(parse_scan(file))
         #hold one account number at once to deal with
         temp=[]
-        for c,val in enumerate(numbers):
+        for c,val in enumerate(numbers[0]):
            temp.append(val)
            #after 9 digits check validity
            if (c+1)%9==0:
@@ -24,25 +24,30 @@ def validate(option):
                    #store validity value with number
                    validity.append([(''.join(list(map(str, temp)))),checksum==0])
                    #print results in case this module is used separately
-                   print(f"Account number {validity[((c+1)//9)-1][0]} validity: {validity[((c+1)//9)-1][1]}")
+                   #print(f"Account number {validity[((c+1)//9)-1][0]} validity: {validity[((c+1)//9)-1][1]}")
                else:
                    entry=[(''.join(list(map(str, temp)))),"ILL"]
-                   print(f"Account number {entry[0]} validity: {entry[1]}")
+                   #print(f"Account number {entry[0]} validity: {entry[1]}")
                    validity.append(entry)
                temp=[]
         return validity
 
     elif option=='num':
-        nums=(input("Numbers: "))
+        nums=arg
         validity=[]
-        #comprehesion to reverse list and calculate the components of checksum
-        check=[((x+1)*int(nums[::-1][x])) for x in range(len(nums))]
-        #rest of the checksum
-        checksum=sum(list(map(int,check)))%11
-        #store validity value with number
-        validity.append((''.join(list(map(str, nums)))))
-        validity.append(checksum==0)
-        print(f"Account number {validity[0]} validity: {validity[1]}")
+        if '?' not in nums:
+            #comprehesion to reverse list and calculate the components of checksum
+            check=[((x+1)*int(nums[::-1][x])) for x in range(len(nums))]
+            #rest of the checksum
+            checksum=sum(list(map(int,check)))%11
+            #store validity value with number
+            validity.append((''.join(list(map(str, nums)))))
+            validity.append(checksum==0)
+        else:
+           entry=[(''.join(list(map(str, nums)))),"ILL"]
+           #print(f"Account number {entry[0]} validity: {entry[1]}")
+           validity=entry
+
         return validity
 
     else:
@@ -51,12 +56,17 @@ def validate(option):
 
 
 if __name__=="__main__":
-    if len(sys.argv) < 2:
-        print("""Not enough arguments! Usage: 'user_story_2 <option>' ; options: 'us1' to use numbers from the first components freshly parsed
-        or 'num' to input your own numbers as a single entry for test purposes""")
+    if len(sys.argv) < 3:
+        print("""Not enough arguments! Usage: 'user_story_2 us1 <filename>' to use first user story; or user_story_2 num <numbers>''""")
         exit(1)
     else:
-        validate(sys.argv[1])
+        valid_list=validate(sys.argv[1],sys.argv[2])
+        if len(valid_list)>2:
+            for i in valid_list:
+                print(f"Account number {i[0]} validity: {i[1]}")
+        else:
+            print(f"Account number {valid_list[0]} validity: {valid_list[1]}")
+
 
 
 
