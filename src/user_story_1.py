@@ -61,8 +61,9 @@ def give_numbers(entries):
     key_list = list(digits.keys())
     val_list = list(digits.values())
 
-    #identify a digit by its three parts
-    numbers=[key_list[val_list.index(digit_parts[x][y])] for x in range(len(digit_parts)) for y in range(len(digit_parts[x]))]
+    #identify a digit by its three parts, modified to work with user story 3
+    numbers=[key_list[val_list.index(digit_parts[x][y])] if digit_parts[x][y] in digits.values()  else '?' for x in range(len(digit_parts))  for y in range(len(digit_parts[x])) ]
+    #numbers=[key_list[val_list.index(digit_parts[x][y])] for x in range(len(digit_parts)) for y in range(len(digit_parts[x]))]
     return numbers
 
 def parse_scan(filename):
