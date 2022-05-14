@@ -15,12 +15,16 @@ def create_entries_mass(pc,file):
     filetowrite=file
     toprint=[]
     for i in range(pc*9):
-        toprint.append((random.choices((list(digits.values())))[0]))
-    chunked = [toprint[i:i+9] for i in range(0, len(toprint), 9)]
+        toprint.append((random.choices((list(digits.items())))[0]))
+    entries=[x[0] for x in toprint]
+    symbols=[x[1] for x in toprint]
+    chunked = [symbols[i:i+9] for i in range(0, len(symbols), 9)]
     f = open(filetowrite, "a")
 
 
+    print(entries)
     for x in range(len(chunked)):
+
         for i in range(3):
             line=""
             for y in range(len(chunked[x])):
@@ -30,10 +34,10 @@ def create_entries_mass(pc,file):
         f.write('\n')
 
     f.close()
+    return entries
 
 if __name__=="__main__":
-    inp=input("File: ")
-    create_entries_mass(500,inp)
+    create_entries_mass(500,"../data/test_mass.txt")
 
 
 
