@@ -2,7 +2,10 @@ from user_story_1 import *
 from user_story_2 import *
 
 def make_results(tof,fromf):
-    results=validate('us1',fromf)
+    if __name__!="user_story_3":
+        results=validate('us1',fromf)
+    else:
+        results=fromf
     with open(tof, 'w') as f:
         for entry in results:
             if entry[1]==True:
