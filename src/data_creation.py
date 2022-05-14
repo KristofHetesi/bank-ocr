@@ -19,22 +19,20 @@ def create_entries_mass(pc,file):
     entries=[x[0] for x in toprint]
     symbols=[x[1] for x in toprint]
     chunked = [symbols[i:i+9] for i in range(0, len(symbols), 9)]
-    f = open(filetowrite, "a")
+    f = open(filetowrite, "w")
 
 
-    print(entries)
     for x in range(len(chunked)):
 
         for i in range(3):
             line=""
             for y in range(len(chunked[x])):
-                print(chunked[x][y][i])
                 line+=chunked[x][y][i]
             f.write(line+'\n')
         f.write('\n')
 
     f.close()
-    return entries
+    return [entries,symbols]
 
 if __name__=="__main__":
     create_entries_mass(500,"../data/test_mass.txt")

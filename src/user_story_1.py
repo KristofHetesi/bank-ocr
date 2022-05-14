@@ -28,9 +28,9 @@ def make_entries(lines):
         separate_digit_parts = ["".join([lines[c][x-3],lines[c][x-2],lines[c][x-1]])
                 for x in range(1,(len(lines[c])+1)) if x%3==0]
 
+
         #store digit parts as lists in a second temporary variable used later
         entry_as_nested_list.append(separate_digit_parts)
-
         #reset the first temporary variable since next iteration is dealing with another entry that is handeld separately
         separate_digit_parts=[]
 
