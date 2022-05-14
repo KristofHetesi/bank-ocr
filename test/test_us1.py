@@ -1,10 +1,15 @@
 import pytest
+import sys
+#sys.path.append("../src")
+from src import user_story_1
+from src import data_creation
 
 
-class MyTestCase(unittest.TestCase):
-    def test_something(self):
-        self.assertEqual(True, False)  # add assertion here
+def test_mass():
+    correct=data_creation.create_entries_mass(500,'../data/test_mass.txt')
+    results=user_story_1.parse_scan('../data/test_mass.txt')
+    for j in range(len(results)):
+        assert results[0][j]==correct[0][j]
 
 
-if __name__ == '__main__':
-    unittest.main()
+
