@@ -51,7 +51,6 @@ def give_numbers(entries):
     #transpose the inner parts of the nested list
     #reorders them so one inner list is know represents the three parts of a digit
     digit_parts=[list(map(list, zip(*x))) for x in entries]
-    print(digit_parts)
 
     #digits represented as their three parts and modified to user story 5 letters
     digits={0:[' _ ', '| |', '|_|'],1:['   ','  |', '  |'],2:[' _ ', ' _|', '|_ '], 3:[' _ ', ' _|', ' _|'], 4:['   ','|_|', '  |'],
