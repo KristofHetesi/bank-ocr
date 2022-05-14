@@ -2,6 +2,7 @@ from user_story_1 import *
 
 
 def validate(option,arg):
+    letters={'A':10,'B':11,'C':12,'D':13,'E':14,'F':15}
     #main option that uses the first user story to get numbers from a file
     if option=='us1':
         #list to store all numbers and their corresponding results
@@ -18,7 +19,7 @@ def validate(option,arg):
                #adapted to us3
                if '?' not in temp:
                    #comprehesion to reverse list and calculate the components of checksum
-                   check=[((x+1)*temp[::-1][x]) for x in range(len(temp))]
+                   check=[((x+1)*temp[::-1][x]) if str(temp[::-1][x]).isdigit() else ((x+1)*letters[temp[::-1][x]]) for x in range(len(temp))]
                    #rest of the checksum
                    checksum=sum(check)%11
                    #store validity value with number
@@ -61,7 +62,7 @@ if __name__=="__main__":
         exit(1)
     else:
         valid_list=validate(sys.argv[1],sys.argv[2])
-        if len(valid_list)>2:
+        if len(valid_list)>=2:
             for i in valid_list:
                 print(f"Account number {i[0]} validity: {i[1]}")
         else:
