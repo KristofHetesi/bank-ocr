@@ -38,7 +38,7 @@ def validate(option,arg):
         validity=[]
         if '?' not in nums:
             #comprehesion to reverse list and calculate the components of checksum
-            check=[((x+1)*int(nums[::-1][x])) for x in range(len(nums))]
+            check=[((x+1)*nums[::-1][x]) if str(nums[::-1][x]).isdigit() else ((x+1)*letters[nums[::-1][x]]) for x in range(len(nums))]
             #rest of the checksum
             checksum=sum(list(map(int,check)))%11
             #store validity value with number
