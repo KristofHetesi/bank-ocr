@@ -3,7 +3,9 @@ from user_story_3 import *
 
 
 digits={0:[' _ ', '| |', '|_|'],1:['   ','  |', '  |'],2:[' _ ', ' _|', '|_ '], 3:[' _ ', ' _|', ' _|'], 4:['   ','|_|', '  |'],
-            5:[' _ ', '|_ ', ' _|'], 6:[' _ ', '|_ ', '|_|'], 7:[' _ ', '  |', '  |'], 8:[' _ ', '|_|', '|_|'], 9:[' _ ', '|_|', '  _|']}
+            5:[' _ ', '|_ ', ' _|'], 6:[' _ ', '|_ ', '|_|'], 7:[' _ ', '  |', '  |'], 8:[' _ ', '|_|', '|_|'], 9:[' _ ', '|_|', '  _|'],
+            'A':[' _ ', '|_|', '| |'],'B':[' _ ', '|_\\', '|_/'],'C':[' _ ', '|  ', '|_ '],'D':[' _ ', '| \\', '|_/'],
+             'E':[' _ ', '|_ ', '|_ '],'F':[' _ ', '|_ ', '|  ']}
 
 #function to deal with ILL labeled entries
 def find_alt_ILL(entries,position,entry):
@@ -27,7 +29,8 @@ def find_alt_ILL(entries,position,entry):
             #we have three position we change inside one part
             for x in range(3):
                 #try all three positions with all three possible symbols and see if they match the last missing part for a correct number
-                if diff[:x] + '|' + diff[x+1:]==v[pos] or diff[:x] + ' ' + diff[x+1:]==v[pos] or diff[:x] + '_' + diff[x+1:]==v[pos]:
+                if diff[:x] + '|' + diff[x+1:]==v[pos] or diff[:x] + ' ' + diff[x+1:]==v[pos] or diff[:x] + '_' + diff[x+1:]==v[pos] or \
+                       diff[:x] + '\\' + diff[x+1:]==v[pos] or diff[:x] + '/' + diff[x+1:]==v[pos] :
                     #add to possible alterations
                     alt.append(k)
 
@@ -83,12 +86,15 @@ def find_alt_ILL(entries,position,entry):
 #function to correct numbers with ERR label
 def find_alt_ERR(numbers):
     #all the possible alternatives to each number
-    alternatives={0:[8],1:[7],2:[],3:[9],4:[],5:[6,9],6:[5,8],7:[1],8:[0,6,9],9:[3,5,8]}
+    alternatives={0:[8],1:[7],2:[],3:[9],4:[],5:[6,9,'E'],6:[5,8],7:[1],8:[0,6,9,'A'],9:[3,5,8],'A':[8],'B':['D'],'C':['E'],'D':['B'],
+                  'E':[6,'C','F'],'F':['E']}
     alts=[]
     #iterate numbers
     for c,dig in enumerate(numbers):
+        if dig.isdigit():
+            dig=int(dig)
         #iterate possible alternatives to digit
-        for x in alternatives[int(dig)]:
+        for x in alternatives[dig]:
             #check validity with new numbers
             new = validate('num',numbers[:c]+str(x)+numbers[c+1:])
             if new[1] == True:
@@ -132,4 +138,4 @@ if __name__=="__main__":
         exit(1)
     else:
 
-        print(error_correction(sys.argv[1],sys.argv[2]))
+        error_correction(sys.argv[1],sys.argv[2])
