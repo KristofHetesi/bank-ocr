@@ -118,14 +118,18 @@ def error_correction(file,rawfile):
         for c,line in enumerate(f):
             new_entry=[]
             entry=line.strip().split()
-            if entry[1]=="ILL":
+            if len(entry)>1 and entry[1]=="ILL":
                 new_entry=find_alt_ILL(raw[c],entry[0].index("?"),entry[0])
                 #after correcting the ILL its still possible to have invalid checksum
                 if  new_entry[1] == False:
                     new_entry=find_alt_ERR(new_entry[0])
 
-            elif entry[1]=="ERR":
+            elif len(entry)>1 and entry[1]=="ERR":
                 new_entry=find_alt_ERR(entry[0])
+
+            else:
+                new_entry=["".join(list(map(str,entry))),True]
+
 
             new_entries.append(new_entry)
     make_results(f"{file}_final",new_entries)
