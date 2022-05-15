@@ -22,6 +22,7 @@ Since I could not implement proper testing in time, I created a python script to
 a lot of possible entries prove more or less that the system works as intended.
 
 ## Usage 
+In most cases you will need to have a proper txt file with entries to run the files. *See comment below*
 ### Separately
 #### user_story_1
 Run the file from the command line. Takes 1 argument: the name of the file with the scanned numbers
