@@ -12,3 +12,74 @@ The main files will consist of one file for each user story as a module.
 However, when a user story only adds more functionality to an existing process,
 it will be contained in the same file. All the modules should be able to communicate via a caller file, but should be capable of functioning by themselves.
 
+## Results
+The project is completely working, however due to the time constraints there is no real error handling implemented,
+so the program expects a flawless user,flawless files and flawless inputs to work. Also, the time ran out to implement unit tests
+properly so only manual testing was done. The structure could also be improved for more clarity. Further optimization
+of the processes would also be required
+
+## Usage 
+### Separately
+#### user_story_1
+Run the file from the command line. Takes 1 argument: the name of the file with the scanned numbers
+#### user_story_2
+Run the file from the command line. Has to options. If you give 'us1' as the first argument,
+you need to have the name of the scanned file as a second argument, to validate numbers from a file.
+If you give 'num' as the first argument,
+you need to have a 9 digit number as a second argument, to validate the number.
+#### user_story_3
+Run the file from the command line. Takes 2 arguments: name of the file you want your results to be written in and the name
+of the file with the raw scanned numbers.
+#### user_story_4
+
+### Together
+Run main with 2 arguments: name of the file you want your results to be written in and the name
+of the file with the raw scanned numbers.
+
+## Files
+### structure
+The files are separated into 3 folders. scr is the code folder, data is for the text files, which were used to
+manually test the code.
+The test folder contains the tests (work in progress due to time issues)
+### main
+Used to execute all the components
+
+### user_story_1.py
+
+#### read_file
+This function gets a filename as an input, then reads the contents and returns a list, containing all the lines,
+a line as one consecutive string of characters
+
+#### make_entries
+This function continues the work of the read_files. Takes a list of strings as an input, and through a series of
+transformation return a multiple nested list (three cahracters representing a third of the digit inside a list
+of the characters in one line.)
+
+#### give_numbers
+Continues the work of the previous function, takes a nested list as input, transposes it to make a nested list 
+where each digit is inside a list as the three parts of it (top,bottom,middle). Then it identifies which number belongs
+to a batch of characters and returns it.
+
+#### parse_scan
+The driver to execute all the previous functions in order. Takes the filename as input returns the account numbers
+and the final matrix of scanned characters
+
+#### return_raw
+Returns only the raw formatted characters
+
+### user_story_2
+
+#### validate
+If the user input was us1 it works with a file and uses the first user case, if the input was num it validates a 
+single entry, but the functionality is almost completely the same in both parts.
+
+This function calculates a checksum and returns all account numbers paired with the checksum value.
+
+### user_story_3
+
+#### make_results
+This function takes a filename to write to and the filename of the raw entries to format and write the results using the first two user stories.
+
+
+
+
