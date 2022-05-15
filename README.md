@@ -18,6 +18,9 @@ so the program expects a flawless user,flawless files and flawless inputs to wor
 properly so only manual testing was done. The structure could also be improved for more clarity. Further optimization
 of the processes would also be required
 
+Since I could not implement proper testing in time, I created a python script to generate a huge number of entries randomly, so hopefully
+a lot of possible entries prove more or less that the system works as intended.
+
 ## Usage 
 ### Separately
 #### user_story_1
@@ -31,10 +34,17 @@ you need to have a 9 digit number as a second argument, to validate the number.
 Run the file from the command line. Takes 2 arguments: name of the file you want your results to be written in and the name
 of the file with the raw scanned numbers.
 #### user_story_4
+Run the file from the command line. Takes the file name that contains the results of the validation and the file name of the raw, scanned entries.
 
 ### Together
 Run main with 2 arguments: name of the file you want your results to be written in and the name
 of the file with the raw scanned numbers.
+
+The final solutions are visible clearly in the final_<yourfile>.txt file after running the scripts.
+
+
+### Comment
+To see the code working, generate a text file using data_creation, which randomly creates 5000 entries to a txt file, or use the test.txt.
 
 ## Files
 ### structure
@@ -95,7 +105,7 @@ there is no possible combination with valid checksum it returns ERR.
 This function tries to correct entries with label ILL-illegible digit. Takes an entry as raw format, the position of the illegible character and the entry itself as an input and finds all possible digits to replace the illegible one.
 It has multiple recursions to deal with validating the entry again if it has another ?
 
-This function should be simplified in the future. Due to time constraints I used my first solution
+This function should be simplified in the future. Due to time constraints I used my first complex solution at the end.
 
 
 
