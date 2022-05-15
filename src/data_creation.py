@@ -21,14 +21,24 @@ def create_entries_mass(pc,file):
     chunked = [symbols[i:i+9] for i in range(0, len(symbols), 9)]
     f = open(filetowrite, "w")
 
-
+    random_weights= [0] * 14 + [1] * 1
     for x in range(len(chunked)):
 
         for i in range(3):
+
             line=""
+            new=""
             for y in range(len(chunked[x])):
-                line+=chunked[x][y][i]
+                messup=random.choice(random_weights)
+                if messup==1:
+                    new=chunked[x][y][i][:-1]+' '
+                else:
+                    new=chunked[x][y][i]
+                line+=new
+            # if messup==1:
+            #     line=line[:-2]
             f.write(line+'\n')
+
         f.write('\n')
 
     f.close()
