@@ -67,7 +67,7 @@ def find_alt_ILL(entries,position,entry):
                 if final[1]==False:
                     alt.remove(opt)
 
-    #after the iterations we need to check again if we have only one valid option
+    #after the recursions we need to check again if we have only one valid option
     if len(alt)==1:
         entry = entry[:position]+str(alt[0])+entry[position+1:]
         new=(validate('num',entry))
@@ -115,6 +115,7 @@ def find_alt_ERR(numbers):
 #function to correct ILL and ERR labeled entries
 def error_correction(file,rawfile):
 
+    #get the organized scans
     raw=return_raw(rawfile)
     new_entries=[]
     #open the simple dummy file for reading
