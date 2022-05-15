@@ -26,7 +26,7 @@ a lot of possible entries prove more or less that the system works as intended.
 #### user_story_1
 Run the file from the command line. Takes 1 argument: the name of the file with the scanned numbers
 #### user_story_2
-Run the file from the command line. Has to options. If you give 'us1' as the first argument,
+Run the file from the command line. Has two options. If you give 'us1' as the first argument,
 you need to have the name of the scanned file as a second argument, to validate numbers from a file.
 If you give 'num' as the first argument,
 you need to have a 9 digit number as a second argument, to validate the number.
