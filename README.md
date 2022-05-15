@@ -80,6 +80,23 @@ This function calculates a checksum and returns all account numbers paired with 
 #### make_results
 This function takes a filename to write to and the filename of the raw entries to format and write the results using the first two user stories.
 
+### user_story_4
+
+#### error_correction
+Takes as argument the file name with the results from validation and the raw numbers file name.
+Then it executes the two other functions in the file to try and correct  entries with labels ILL or ERR. Then returns the final results.
+
+#### find_alt_ERR
+This function tries to correct entries with label ERR-invalid checksum. Takes an entry as an input and finds all possible combinations of numbers.
+In case of one possible solution it returns the solution, in case there are multiple solutions appends the label AMB and in case
+there is no possible combination with valid checksum it returns ERR.
+
+#### find_alt_ILL
+This function tries to correct entries with label ILL-illegible digit. Takes an entry as raw format, the position of the illegible character and the entry itself as an input and finds all possible digits to replace the illegible one.
+It has multiple recursions to deal with validating the entry again if it has another ?
+
+This function should be simplified in the future. Due to time constraints I used my first solution
+
 
 
 
