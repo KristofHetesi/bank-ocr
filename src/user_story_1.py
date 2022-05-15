@@ -76,7 +76,7 @@ def parse_scan(filename):
 
 
 def return_raw(filename):
-    lines=read_file(filename)
+    lines=read_file(str(filename))
     entries=make_entries(lines)
     numbers=give_numbers(entries)
     return numbers[1]

@@ -1,5 +1,10 @@
 import sys
-from user_story_3 import *
+
+try:
+    from user_story_3 import *
+
+    from user_story_1 import *
+except:pass
 
 
 digits={0:[' _ ', '| |', '|_|'],1:['   ','  |', '  |'],2:[' _ ', ' _|', '|_ '], 3:[' _ ', ' _|', ' _|'], 4:['   ','|_|', '  |'],
@@ -53,7 +58,7 @@ def find_alt_ILL(entries,position,entry):
         for opt in alt :
             #evaluate new numbers
             entr = entry[:position]+str(opt)+entry[position+1:]
-            new=validate('num',entr)
+            new=(validate('num',entr))
             #if there are still ? after this
             if new[1]=='ILL':
                 #call recursively the function again to deal with all ?s one by one
@@ -96,7 +101,7 @@ def find_alt_ERR(numbers):
         #iterate possible alternatives to digit
         for x in alternatives[dig]:
             #check validity with new numbers
-            new = validate('num',numbers[:c]+str(x)+numbers[c+1:])
+            new = (validate('num',numbers[:c]+str(x)+numbers[c+1:]))
             if new[1] == True:
                 alts.append(new)
     if len(alts)==1:
@@ -132,8 +137,8 @@ def error_correction(file,rawfile):
 
 
             new_entries.append(new_entry)
-    make_results(f"{file}_final",new_entries)
-
+    make_results(f"final_{file}",new_entries)
+    return new_entries
 
 
 if __name__=="__main__":
@@ -142,4 +147,4 @@ if __name__=="__main__":
         exit(1)
     else:
 
-        error_correction(sys.argv[1],sys.argv[2])
+        print(error_correction(sys.argv[1],sys.argv[2]))

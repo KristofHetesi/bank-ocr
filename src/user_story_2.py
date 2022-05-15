@@ -12,6 +12,7 @@ def validate(option,arg):
         validity=[]
         file=arg#"../data/0-9_faulty.txt"#
         #call us1
+
         numbers=(parse_scan(file))
         #hold one account number at once to deal with
         temp=[]
@@ -42,7 +43,7 @@ def validate(option,arg):
         if '?' not in nums:
             #nums=list(map(int,nums))
             #comprehesion to reverse list and calculate the components of checksum
-            check=[int(((x+1)*int(nums[::-1][x]))) if str(nums[::-1][x]).isdigit() else ((x+1)*letters[nums[::-1][x]]) for x in range(len(nums))]
+            check=[int(((x+1)*int(nums[::-1][x]))) if str(nums[::-1][x]).isdigit() else int(((x+1)*letters[nums[::-1][x]])) for x in range(len(nums))]
             #rest of the checksum
             checksum=sum(list(map(int,check)))%11
             #store validity value with number

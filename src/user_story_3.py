@@ -1,5 +1,7 @@
-from user_story_1 import *
-from user_story_2 import *
+try:
+    from user_story_1 import *
+    from user_story_2 import *
+except:pass
 
 def make_results(tof,fromf):
     if __name__!="user_story_3":
